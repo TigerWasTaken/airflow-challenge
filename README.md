@@ -42,3 +42,25 @@ And the last connection for check the file availability in the local filesystem:
 And that's it! You can now run the pipeline.
 
 To run the pipeline you need to create a new DAG run. Go to the DAG page and click on the `Trigger DAG` button of the `meli_category_data_pipeline`. This will run the pipeline.
+
+Implementation details:
+
+    I used the `PythonOperator` to run the most of the tasks. I could have used the `BashOperator` but I wanted to have more control over the execution of the tasks. 
+
+    I used the `PostgresOperator` to run the SQL queries.
+
+    I used the `HttpSensor` to check if the API is available.
+
+    I used the `FileSensor` to check if the file is available in the local filesystem.
+
+    To transform the data I used the `pandas` library, because the data was small enough to fit in memory. If the data was bigger, I would have used `spark` to process the data.
+
+    To get the data from the API I used the `requests` library.
+
+    I used the `datetime` library to get the current date and to format the date in the correct format.
+
+    I used the `os` library to get the environment variables in runtime.
+
+    I used a python operator to send the emails with the results of the pipeline. I could have used the `EmailOperator` but python combined with pandas is more flexible.
+
+
